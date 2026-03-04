@@ -14,7 +14,7 @@ endif
 SHELL = /usr/bin/env bash -o pipefail
 .SHELLFLAGS = -ec
 
-VERSION ?= 26.3.0
+VERSION ?= 26.3.10
 
 # mariadb-operator
 IMG_NAME ?= docker-registry3.mariadb.com/mariadb-operator/mariadb-operator
