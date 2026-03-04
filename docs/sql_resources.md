@@ -38,6 +38,29 @@ spec:
 
 In the example above, a user named `bob` identified by the password available in the `bob-password` `Secret` will be created in the `mariadb` instance.
 
+#### Credential generation
+
+`mariadb-operator` can automatically generate a random password and store it in a `Secret` when the `generate: true` field is set in `passwordSecretKeyRef`:
+
+```yaml
+apiVersion: k8s.mariadb.com/v1alpha1
+kind: User
+metadata:
+  name: bob
+spec:
+  mariaDbRef:
+    name: mariadb
+  passwordSecretKeyRef:
+    name: bob-password
+    key: password
+    generate: true
+  maxUserConnections: 20
+  host: "%"
+  cleanupPolicy: Delete
+```
+
+If the `bob-password` `Secret` doesn't exist, the operator will generate a random password and create it. If the `Secret` already exists, the existing password will be used. See the [Connections](./connections.md#credential-generation) documentation for more details on credential generation.
+
 Refer to the [reference section](#reference) for more detailed information about every field.
 
 #### Custom name

@@ -5326,7 +5326,7 @@ func (in *UserSpec) DeepCopyInto(out *UserSpec) {
 	out.MariaDBRef = in.MariaDBRef
 	if in.PasswordSecretKeyRef != nil {
 		in, out := &in.PasswordSecretKeyRef, &out.PasswordSecretKeyRef
-		*out = new(SecretKeySelector)
+		*out = new(GeneratedSecretKeyRef)
 		**out = **in
 	}
 	if in.PasswordHashSecretKeyRef != nil {

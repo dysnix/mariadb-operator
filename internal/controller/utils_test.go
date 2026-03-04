@@ -69,6 +69,9 @@ var (
 		},
 		Key: testPwdSecretKey,
 	}
+	testPasswordGeneratedSecretRef = mariadbv1alpha1.GeneratedSecretKeyRef{
+		SecretKeySelector: testPasswordSecretRef,
+	}
 	testEmulatedExternalPasswordSecretRef = mariadbv1alpha1.SecretKeySelector{
 		LocalObjectReference: mariadbv1alpha1.LocalObjectReference{
 			Name: testEmulatedExternalPwdKey.Name,
