@@ -6,9 +6,11 @@ import (
 
 	mariadbv1alpha1 "github.com/mariadb-operator/mariadb-operator/v25/api/v1alpha1"
 	condition "github.com/mariadb-operator/mariadb-operator/v25/pkg/condition"
+	"github.com/mariadb-operator/mariadb-operator/v25/pkg/controller/secret"
 	"github.com/mariadb-operator/mariadb-operator/v25/pkg/controller/sql"
 	"github.com/mariadb-operator/mariadb-operator/v25/pkg/refresolver"
 	sqlClient "github.com/mariadb-operator/mariadb-operator/v25/pkg/sql"
+	"k8s.io/apimachinery/pkg/types"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/log"
@@ -17,18 +19,20 @@ import (
 // UserReconciler reconciles a User object
 type UserReconciler struct {
 	client.Client
-	RefResolver    *refresolver.RefResolver
-	ConditionReady *condition.Ready
-	SqlOpts        []sql.SqlOpt
+	RefResolver      *refresolver.RefResolver
+	SecretReconciler *secret.SecretReconciler
+	ConditionReady   *condition.Ready
+	SqlOpts          []sql.SqlOpt
 }
 
-func NewUserReconciler(client client.Client, refResolver *refresolver.RefResolver, conditionReady *condition.Ready,
-	sqlOpts ...sql.SqlOpt) *UserReconciler {
+func NewUserReconciler(client client.Client, refResolver *refresolver.RefResolver, secretReconciler *secret.SecretReconciler,
+	conditionReady *condition.Ready, sqlOpts ...sql.SqlOpt) *UserReconciler {
 	return &UserReconciler{
-		Client:         client,
-		RefResolver:    refResolver,
-		ConditionReady: conditionReady,
-		SqlOpts:        sqlOpts,
+		Client:           client,
+		RefResolver:      refResolver,
+		SecretReconciler: secretReconciler,
+		ConditionReady:   conditionReady,
+		SqlOpts:          sqlOpts,
 	}
 }
 
@@ -44,6 +48,10 @@ func (r *UserReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.
 		return ctrl.Result{}, client.IgnoreNotFound(err)
 	}
 
+	if err := r.reconcileSecret(ctx, &user); err != nil {
+		return ctrl.Result{}, fmt.Errorf("error reconciling User secret: %v", err)
+	}
+
 	wr := newWrapperUserReconciler(r.Client, r.RefResolver, &user)
 	wf := newWrappedUserFinalizer(r.Client, &user)
 	tf := sql.NewSqlFinalizer(r.Client, wf, r.SqlOpts...)
@@ -54,6 +62,31 @@ func (r *UserReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.
 		return result, fmt.Errorf("error reconciling in TemplateReconciler: %v", err)
 	}
 	return result, nil
+}
+
+func (r *UserReconciler) reconcileSecret(ctx context.Context, user *mariadbv1alpha1.User) error {
+	if user.Spec.PasswordSecretKeyRef == nil {
+		return nil
+	}
+	secretKeyRef := *user.Spec.PasswordSecretKeyRef
+	if secretKeyRef.Name == "" || secretKeyRef.Key == "" {
+		return nil
+	}
+
+	req := secret.PasswordRequest{
+		Owner: user,
+		Key: types.NamespacedName{
+			Name:      secretKeyRef.Name,
+			Namespace: user.Namespace,
+		},
+		SecretKey: secretKeyRef.Key,
+		Generate:  secretKeyRef.Generate,
+	}
+	_, err := r.SecretReconciler.ReconcilePassword(ctx, req)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 // SetupWithManager sets up the controller with the Manager.
@@ -118,7 +151,7 @@ func (wr *wrappedUserReconciler) Reconcile(ctx context.Context, mdbClient *sqlCl
 		createUserOpts = append(createUserOpts, sqlClient.WithIdentifiedByPassword(passwordHash))
 	} else if wr.user.Spec.PasswordSecretKeyRef != nil {
 		var err error
-		password, err = wr.refResolver.SecretKeyRef(ctx, *wr.user.Spec.PasswordSecretKeyRef, wr.user.Namespace)
+		password, err = wr.refResolver.SecretKeyRef(ctx, wr.user.Spec.PasswordSecretKeyRef.SecretKeySelector, wr.user.Namespace)
 		if err != nil {
 			return fmt.Errorf("error reading user password secret: %v", err)
 		}

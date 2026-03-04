@@ -27,13 +27,19 @@ func (b *Builder) BuildUser(key types.NamespacedName, owner metav1.Object, opts 
 		metadata.NewMetadataBuilder(key).
 			WithMetadata(opts.Metadata).
 			Build()
+	var passwordSecretKeyRef *mariadbv1alpha1.GeneratedSecretKeyRef
+	if opts.PasswordSecretKeyRef != nil {
+		passwordSecretKeyRef = &mariadbv1alpha1.GeneratedSecretKeyRef{
+			SecretKeySelector: *opts.PasswordSecretKeyRef,
+		}
+	}
 	user := &mariadbv1alpha1.User{
 		ObjectMeta: objMeta,
 		Spec: mariadbv1alpha1.UserSpec{
 			MariaDBRef:               opts.MariaDBRef,
 			Name:                     opts.Name,
 			Host:                     opts.Host,
-			PasswordSecretKeyRef:     opts.PasswordSecretKeyRef,
+			PasswordSecretKeyRef:     passwordSecretKeyRef,
 			PasswordHashSecretKeyRef: opts.PasswordHashSecretKeyRef,
 		},
 	}

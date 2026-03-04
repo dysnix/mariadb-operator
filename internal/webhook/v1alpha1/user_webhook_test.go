@@ -39,11 +39,13 @@ var _ = Describe("v1alpha1.User webhook", func() {
 							},
 							WaitForIt: true,
 						},
-						PasswordSecretKeyRef: &v1alpha1.SecretKeySelector{
-							LocalObjectReference: v1alpha1.LocalObjectReference{
-								Name: "user-mariadb-webhook-root",
+						PasswordSecretKeyRef: &v1alpha1.GeneratedSecretKeyRef{
+							SecretKeySelector: v1alpha1.SecretKeySelector{
+								LocalObjectReference: v1alpha1.LocalObjectReference{
+									Name: "user-mariadb-webhook-root",
+								},
+								Key: "password",
 							},
-							Key: "password",
 						},
 						MaxUserConnections: 10,
 					},
@@ -67,11 +69,13 @@ var _ = Describe("v1alpha1.User webhook", func() {
 							},
 							WaitForIt: true,
 						},
-						PasswordSecretKeyRef: &v1alpha1.SecretKeySelector{
-							LocalObjectReference: v1alpha1.LocalObjectReference{
-								Name: "user-mariadb-webhook-root",
+						PasswordSecretKeyRef: &v1alpha1.GeneratedSecretKeyRef{
+							SecretKeySelector: v1alpha1.SecretKeySelector{
+								LocalObjectReference: v1alpha1.LocalObjectReference{
+									Name: "user-mariadb-webhook-root",
+								},
+								Key: "password",
 							},
-							Key: "password",
 						},
 						MaxUserConnections: 10,
 					},
@@ -92,11 +96,13 @@ var _ = Describe("v1alpha1.User webhook", func() {
 							},
 							WaitForIt: true,
 						},
-						PasswordSecretKeyRef: &v1alpha1.SecretKeySelector{
-							LocalObjectReference: v1alpha1.LocalObjectReference{
-								Name: "user-mariadb-webhook-root",
+						PasswordSecretKeyRef: &v1alpha1.GeneratedSecretKeyRef{
+							SecretKeySelector: v1alpha1.SecretKeySelector{
+								LocalObjectReference: v1alpha1.LocalObjectReference{
+									Name: "user-mariadb-webhook-root",
+								},
+								Key: "password",
 							},
-							Key: "password",
 						},
 						Require: &v1alpha1.TLSRequirements{
 							Issuer:  ptr.To("/CN=mariadb-galera-ca"),
@@ -121,11 +127,13 @@ var _ = Describe("v1alpha1.User webhook", func() {
 							},
 							WaitForIt: true,
 						},
-						PasswordSecretKeyRef: &v1alpha1.SecretKeySelector{
-							LocalObjectReference: v1alpha1.LocalObjectReference{
-								Name: "user-mariadb-webhook-root",
+						PasswordSecretKeyRef: &v1alpha1.GeneratedSecretKeyRef{
+							SecretKeySelector: v1alpha1.SecretKeySelector{
+								LocalObjectReference: v1alpha1.LocalObjectReference{
+									Name: "user-mariadb-webhook-root",
+								},
+								Key: "password",
 							},
-							Key: "password",
 						},
 						Require: &v1alpha1.TLSRequirements{
 							X509:    ptr.To(true),
@@ -172,11 +180,13 @@ var _ = Describe("v1alpha1.User webhook", func() {
 						},
 						WaitForIt: true,
 					},
-					PasswordSecretKeyRef: &v1alpha1.SecretKeySelector{
-						LocalObjectReference: v1alpha1.LocalObjectReference{
-							Name: "user-mariadb-webhook-root",
+					PasswordSecretKeyRef: &v1alpha1.GeneratedSecretKeyRef{
+						SecretKeySelector: v1alpha1.SecretKeySelector{
+							LocalObjectReference: v1alpha1.LocalObjectReference{
+								Name: "user-mariadb-webhook-root",
+							},
+							Key: "password",
 						},
-						Key: "password",
 					},
 					MaxUserConnections: 10,
 				},
@@ -223,7 +233,7 @@ var _ = Describe("v1alpha1.User webhook", func() {
 			Entry(
 				"Duplicate authentication methods",
 				func(umdb *v1alpha1.User) {
-					umdb.Spec.PasswordHashSecretKeyRef = umdb.Spec.PasswordSecretKeyRef
+					umdb.Spec.PasswordHashSecretKeyRef = &umdb.Spec.PasswordSecretKeyRef.SecretKeySelector
 				},
 				true,
 			),

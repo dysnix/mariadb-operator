@@ -35,11 +35,13 @@ var _ = Describe("Grant", Label("basic"), func() {
 					},
 					WaitForIt: true,
 				},
-				PasswordSecretKeyRef: &mariadbv1alpha1.SecretKeySelector{
-					LocalObjectReference: mariadbv1alpha1.LocalObjectReference{
-						Name: testPwdKey.Name,
+				PasswordSecretKeyRef: &mariadbv1alpha1.GeneratedSecretKeyRef{
+					SecretKeySelector: mariadbv1alpha1.SecretKeySelector{
+						LocalObjectReference: mariadbv1alpha1.LocalObjectReference{
+							Name: testPwdKey.Name,
+						},
+						Key: testPwdSecretKey,
 					},
-					Key: testPwdSecretKey,
 				},
 				MaxUserConnections: 20,
 			},
@@ -162,11 +164,13 @@ var _ = Describe("Grant", Label("basic"), func() {
 					},
 					WaitForIt: true,
 				},
-				PasswordSecretKeyRef: &mariadbv1alpha1.SecretKeySelector{
-					LocalObjectReference: mariadbv1alpha1.LocalObjectReference{
-						Name: testPwdKey.Name,
+				PasswordSecretKeyRef: &mariadbv1alpha1.GeneratedSecretKeyRef{
+					SecretKeySelector: mariadbv1alpha1.SecretKeySelector{
+						LocalObjectReference: mariadbv1alpha1.LocalObjectReference{
+							Name: testPwdKey.Name,
+						},
+						Key: testPwdSecretKey,
 					},
-					Key: testPwdSecretKey,
 				},
 				MaxUserConnections: 20,
 			},
@@ -261,11 +265,13 @@ var _ = Describe("Grant on an external MariaDB", func() {
 					Kind:      mariadbv1alpha1.ExternalMariaDBKind,
 					WaitForIt: true,
 				},
-				PasswordSecretKeyRef: &mariadbv1alpha1.SecretKeySelector{
-					LocalObjectReference: mariadbv1alpha1.LocalObjectReference{
-						Name: testPwdKey.Name,
+				PasswordSecretKeyRef: &mariadbv1alpha1.GeneratedSecretKeyRef{
+					SecretKeySelector: mariadbv1alpha1.SecretKeySelector{
+						LocalObjectReference: mariadbv1alpha1.LocalObjectReference{
+							Name: testPwdKey.Name,
+						},
+						Key: testPwdSecretKey,
 					},
-					Key: testPwdSecretKey,
 				},
 				MaxUserConnections: 20,
 			},
@@ -391,11 +397,13 @@ var _ = Describe("Grant on an external MariaDB", func() {
 					Kind:      mariadbv1alpha1.ExternalMariaDBKind,
 					WaitForIt: true,
 				},
-				PasswordSecretKeyRef: &mariadbv1alpha1.SecretKeySelector{
-					LocalObjectReference: mariadbv1alpha1.LocalObjectReference{
-						Name: testPwdKey.Name,
+				PasswordSecretKeyRef: &mariadbv1alpha1.GeneratedSecretKeyRef{
+					SecretKeySelector: mariadbv1alpha1.SecretKeySelector{
+						LocalObjectReference: mariadbv1alpha1.LocalObjectReference{
+							Name: testPwdKey.Name,
+						},
+						Key: testPwdSecretKey,
 					},
-					Key: testPwdSecretKey,
 				},
 				MaxUserConnections: 20,
 			},
