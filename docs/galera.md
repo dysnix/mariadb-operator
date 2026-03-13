@@ -108,6 +108,8 @@ spec:
       podSyncTimeout: 5m
 ```
 
+> ⚠️ **Important**: When specifying any `recovery` fields (e.g. timeouts), you **must** explicitly set `enabled: true`. If `enabled` is omitted, recovery will be silently disabled due to Go's zero value for `bool` being `false`.
+
 The `minClusterSize` field indicates the minimum cluster size (either absolut number of replicas or percentage) for the operator to consider the cluster healthy. If the cluster is unhealthy for more than the period defined in `clusterHealthyTimeout` (`30s` by default), a cluster recovery process is initiated by the operator. The process is explained in the [Galera documentation](https://galeracluster.com/library/documentation/crash-recovery.html) and consists of the following steps:
 
 - Recover the sequence number from the `grastate.dat` on each node.
