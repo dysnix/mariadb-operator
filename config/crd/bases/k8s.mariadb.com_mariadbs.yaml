@@ -2298,7 +2298,11 @@ spec:
                           the recovery process.
                         type: string
                       enabled:
-                        description: Enabled is a flag to enable GaleraRecovery.
+                        description: |-
+                          Enabled is a flag to enable GaleraRecovery.
+                          It defaults to true when the Recovery field is not set.
+                          IMPORTANT: When specifying any recovery fields (e.g. timeouts), you must explicitly set enabled: true,
+                          otherwise recovery will be silently disabled due to Go's zero value for bool.
                         type: boolean
                       forceClusterBootstrapInPod:
                         description: |-

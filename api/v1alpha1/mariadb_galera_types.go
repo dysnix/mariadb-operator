@@ -108,6 +108,9 @@ type GaleraRecoveryJob struct {
 // More info: https://galeracluster.com/library/documentation/crash-recovery.html.
 type GaleraRecovery struct {
 	// Enabled is a flag to enable GaleraRecovery.
+	// It defaults to true when the Recovery field is not set.
+	// IMPORTANT: When specifying any recovery fields (e.g. timeouts), you must explicitly set enabled: true,
+	// otherwise recovery will be silently disabled due to Go's zero value for bool.
 	// +optional
 	// +operator-sdk:csv:customresourcedefinitions:type=spec,xDescriptors={"urn:alm:descriptor:com.tectonic.ui:booleanSwitch"}
 	Enabled bool `json:"enabled"`
