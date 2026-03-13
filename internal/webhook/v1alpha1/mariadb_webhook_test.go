@@ -190,7 +190,7 @@ var _ = Describe("v1alpha1.MariaDB webhook", func() {
 							GaleraSpec: v1alpha1.GaleraSpec{
 								SST: v1alpha1.SSTMariaBackup,
 								Recovery: &v1alpha1.GaleraRecovery{
-									Enabled:        true,
+									Enabled:        ptr.To(true),
 									MinClusterSize: ptr.To(intstr.FromInt(4)),
 								},
 							},
@@ -213,7 +213,7 @@ var _ = Describe("v1alpha1.MariaDB webhook", func() {
 							GaleraSpec: v1alpha1.GaleraSpec{
 								SST: v1alpha1.SSTMariaBackup,
 								Recovery: &v1alpha1.GaleraRecovery{
-									Enabled:                    true,
+									Enabled:                    ptr.To(true),
 									ForceClusterBootstrapInPod: ptr.To("foo"),
 								},
 							},

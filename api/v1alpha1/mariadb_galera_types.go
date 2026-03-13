@@ -107,10 +107,10 @@ type GaleraRecoveryJob struct {
 // GaleraRecovery is the recovery process performed by the operator whenever the Galera cluster is not healthy.
 // More info: https://galeracluster.com/library/documentation/crash-recovery.html.
 type GaleraRecovery struct {
-	// Enabled is a flag to enable GaleraRecovery.
+	// Enabled is a flag to enable GaleraRecovery. It defaults to true.
 	// +optional
 	// +operator-sdk:csv:customresourcedefinitions:type=spec,xDescriptors={"urn:alm:descriptor:com.tectonic.ui:booleanSwitch"}
-	Enabled bool `json:"enabled"`
+	Enabled *bool `json:"enabled,omitempty"`
 	// MinClusterSize is the minimum number of replicas to consider the cluster healthy. It can be either a number of replicas (1) or a percentage (50%).
 	// If Galera consistently reports less replicas than this value for the given 'ClusterHealthyTimeout' interval, a cluster recovery is initiated.
 	// It defaults to '1' replica, and it is highly recommendeded to keep this value at '1' in most cases.
@@ -160,9 +160,14 @@ type GaleraRecovery struct {
 	Job *GaleraRecoveryJob `json:"job,omitempty"`
 }
 
+// IsEnabled determines whether Galera recovery is enabled. It defaults to true.
+func (g *GaleraRecovery) IsEnabled() bool {
+	return ptr.Deref(g.Enabled, true)
+}
+
 // Validate determines whether a GaleraRecovery is valid.
 func (g *GaleraRecovery) Validate(mdb *MariaDB) error {
-	if !g.Enabled {
+	if !g.IsEnabled() {
 		return nil
 	}
 	if g.MinClusterSize != nil {
@@ -295,11 +300,12 @@ func (g *Galera) SetDefaults(mdb *MariaDB, env *environment.OperatorEnv) error {
 	g.Config.SetDefaults()
 
 	if g.Recovery == nil {
-		g.Recovery = &GaleraRecovery{
-			Enabled: true,
-		}
+		g.Recovery = &GaleraRecovery{}
 	}
-	if ptr.Deref(g.Recovery, GaleraRecovery{}).Enabled {
+	if g.Recovery.Enabled == nil {
+		g.Recovery.Enabled = ptr.To(true)
+	}
+	if g.Recovery.IsEnabled() {
 		g.Recovery.SetDefaults(mdb)
 	}
 
@@ -391,6 +397,16 @@ type GaleraRecoveryStatus struct {
 	Bootstrap *GaleraBootstrapStatus `json:"bootstrap,omitempty"`
 	// PodsRestarted that the Pods have been restarted after the cluster bootstrap.
 	PodsRestarted *bool `json:"podsRestarted,omitempty"`
+}
+
+// IsGaleraRecoveryEnabled indicates if the Galera recovery is enabled.
+func (m *MariaDB) IsGaleraRecoveryEnabled() bool {
+	if !m.IsGaleraEnabled() {
+		return false
+	}
+	galera := ptr.Deref(m.Spec.Galera, Galera{})
+	recovery := ptr.Deref(galera.Recovery, GaleraRecovery{})
+	return recovery.IsEnabled()
 }
 
 // HasGaleraReadyCondition indicates whether the MariaDB object has a GaleraReady status condition.

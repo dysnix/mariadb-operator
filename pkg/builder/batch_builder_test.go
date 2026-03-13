@@ -2163,7 +2163,7 @@ func TestGaleraInitContainers(t *testing.T) {
 				Enabled: true,
 				GaleraSpec: mariadbv1alpha1.GaleraSpec{
 					Recovery: &mariadbv1alpha1.GaleraRecovery{
-						Enabled: true,
+						Enabled: ptr.To(true),
 					},
 				},
 			},
@@ -2215,7 +2215,7 @@ func TestGaleraRecoveryJobImagePullSecrets(t *testing.T) {
 						Enabled: true,
 						GaleraSpec: mariadbv1alpha1.GaleraSpec{
 							Recovery: &mariadbv1alpha1.GaleraRecovery{
-								Enabled: true,
+								Enabled: ptr.To(true),
 							},
 						},
 					},
@@ -2232,7 +2232,7 @@ func TestGaleraRecoveryJobImagePullSecrets(t *testing.T) {
 						Enabled: true,
 						GaleraSpec: mariadbv1alpha1.GaleraSpec{
 							Recovery: &mariadbv1alpha1.GaleraRecovery{
-								Enabled: true,
+								Enabled: ptr.To(true),
 							},
 						},
 					},
@@ -2297,7 +2297,7 @@ func TestGaleraRecoveryJobMeta(t *testing.T) {
 						Enabled: true,
 						GaleraSpec: mariadbv1alpha1.GaleraSpec{
 							Recovery: &mariadbv1alpha1.GaleraRecovery{
-								Enabled: true,
+								Enabled: ptr.To(true),
 							},
 						},
 					},
@@ -2321,7 +2321,7 @@ func TestGaleraRecoveryJobMeta(t *testing.T) {
 						Enabled: true,
 						GaleraSpec: mariadbv1alpha1.GaleraSpec{
 							Recovery: &mariadbv1alpha1.GaleraRecovery{
-								Enabled: true,
+								Enabled: ptr.To(true),
 							},
 						},
 					},
@@ -2361,7 +2361,7 @@ func TestGaleraRecoveryJobMeta(t *testing.T) {
 						Enabled: true,
 						GaleraSpec: mariadbv1alpha1.GaleraSpec{
 							Recovery: &mariadbv1alpha1.GaleraRecovery{
-								Enabled: true,
+								Enabled: ptr.To(true),
 								Job: &mariadbv1alpha1.GaleraRecoveryJob{
 									Metadata: &mariadbv1alpha1.Metadata{
 										Labels: map[string]string{
@@ -2403,7 +2403,7 @@ func TestGaleraRecoveryJobMeta(t *testing.T) {
 						Enabled: true,
 						GaleraSpec: mariadbv1alpha1.GaleraSpec{
 							Recovery: &mariadbv1alpha1.GaleraRecovery{
-								Enabled: true,
+								Enabled: ptr.To(true),
 							},
 						},
 					},
@@ -2441,7 +2441,7 @@ func TestGaleraRecoveryJobMeta(t *testing.T) {
 						Enabled: true,
 						GaleraSpec: mariadbv1alpha1.GaleraSpec{
 							Recovery: &mariadbv1alpha1.GaleraRecovery{
-								Enabled: true,
+								Enabled: ptr.To(true),
 								Job: &mariadbv1alpha1.GaleraRecoveryJob{
 									Metadata: &mariadbv1alpha1.Metadata{
 										Labels: map[string]string{
@@ -2488,7 +2488,7 @@ func TestGaleraRecoveryJobMeta(t *testing.T) {
 						Enabled: true,
 						GaleraSpec: mariadbv1alpha1.GaleraSpec{
 							Recovery: &mariadbv1alpha1.GaleraRecovery{
-								Enabled: true,
+								Enabled: ptr.To(true),
 								Job: &mariadbv1alpha1.GaleraRecoveryJob{
 									Metadata: &mariadbv1alpha1.Metadata{
 										Annotations: map[string]string{
@@ -2574,7 +2574,7 @@ func TestGaleraRecoveryJobVolumes(t *testing.T) {
 						Enabled: true,
 						GaleraSpec: mariadbv1alpha1.GaleraSpec{
 							Recovery: &mariadbv1alpha1.GaleraRecovery{
-								Enabled: true,
+								Enabled: ptr.To(true),
 							},
 							Config: mariadbv1alpha1.GaleraConfig{
 								VolumeClaimTemplate: &mariadbv1alpha1.VolumeClaimTemplate{
@@ -2620,7 +2620,7 @@ func TestGaleraRecoveryJobVolumes(t *testing.T) {
 						Enabled: true,
 						GaleraSpec: mariadbv1alpha1.GaleraSpec{
 							Recovery: &mariadbv1alpha1.GaleraRecovery{
-								Enabled: true,
+								Enabled: ptr.To(true),
 							},
 							Config: mariadbv1alpha1.GaleraConfig{
 								ReuseStorageVolume: ptr.To(true),
@@ -2687,7 +2687,7 @@ func TestGaleraRecoveryJobNodeSelector(t *testing.T) {
 						Enabled: true,
 						GaleraSpec: mariadbv1alpha1.GaleraSpec{
 							Recovery: &mariadbv1alpha1.GaleraRecovery{
-								Enabled: true,
+								Enabled: ptr.To(true),
 								Job: &mariadbv1alpha1.GaleraRecoveryJob{
 									PodAffinity: ptr.To(true),
 								},
@@ -2719,7 +2719,7 @@ func TestGaleraRecoveryJobNodeSelector(t *testing.T) {
 						Enabled: true,
 						GaleraSpec: mariadbv1alpha1.GaleraSpec{
 							Recovery: &mariadbv1alpha1.GaleraRecovery{
-								Enabled: true,
+								Enabled: ptr.To(true),
 								Job: &mariadbv1alpha1.GaleraRecoveryJob{
 									PodAffinity: ptr.To(true),
 								},
@@ -2749,7 +2749,7 @@ func TestGaleraRecoveryJobNodeSelector(t *testing.T) {
 						Enabled: true,
 						GaleraSpec: mariadbv1alpha1.GaleraSpec{
 							Recovery: &mariadbv1alpha1.GaleraRecovery{
-								Enabled: true,
+								Enabled: ptr.To(true),
 								Job: &mariadbv1alpha1.GaleraRecoveryJob{
 									PodAffinity: ptr.To(false),
 								},
@@ -2781,7 +2781,7 @@ func TestGaleraRecoveryJobNodeSelector(t *testing.T) {
 						Enabled: true,
 						GaleraSpec: mariadbv1alpha1.GaleraSpec{
 							Recovery: &mariadbv1alpha1.GaleraRecovery{
-								Enabled: true,
+								Enabled: ptr.To(true),
 								Job: &mariadbv1alpha1.GaleraRecoveryJob{
 									PodAffinity: ptr.To(true),
 								},
@@ -2860,7 +2860,7 @@ func TestGaleraRecoveryJobResources(t *testing.T) {
 						Enabled: true,
 						GaleraSpec: mariadbv1alpha1.GaleraSpec{
 							Recovery: &mariadbv1alpha1.GaleraRecovery{
-								Enabled: true,
+								Enabled: ptr.To(true),
 							},
 						},
 					},
@@ -2877,7 +2877,7 @@ func TestGaleraRecoveryJobResources(t *testing.T) {
 						Enabled: true,
 						GaleraSpec: mariadbv1alpha1.GaleraSpec{
 							Recovery: &mariadbv1alpha1.GaleraRecovery{
-								Enabled: true,
+								Enabled: ptr.To(true),
 							},
 						},
 					},
@@ -2901,7 +2901,7 @@ func TestGaleraRecoveryJobResources(t *testing.T) {
 						Enabled: true,
 						GaleraSpec: mariadbv1alpha1.GaleraSpec{
 							Recovery: &mariadbv1alpha1.GaleraRecovery{
-								Enabled: true,
+								Enabled: ptr.To(true),
 								Job: &mariadbv1alpha1.GaleraRecoveryJob{
 									Resources: &mariadbv1alpha1.ResourceRequirements{
 										Requests: corev1.ResourceList{
@@ -2971,7 +2971,7 @@ func TestGaleraRecoveryContainers(t *testing.T) {
 				Enabled: true,
 				GaleraSpec: mariadbv1alpha1.GaleraSpec{
 					Recovery: &mariadbv1alpha1.GaleraRecovery{
-						Enabled: true,
+						Enabled: ptr.To(true),
 					},
 				},
 			},
@@ -3016,7 +3016,7 @@ func TestGaleraRecoveryJobCommand(t *testing.T) {
 				Enabled: true,
 				GaleraSpec: mariadbv1alpha1.GaleraSpec{
 					Recovery: &mariadbv1alpha1.GaleraRecovery{
-						Enabled: true,
+						Enabled: ptr.To(true),
 					},
 				},
 			},

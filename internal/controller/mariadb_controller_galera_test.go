@@ -116,7 +116,7 @@ var _ = Describe("MariaDB Galera lifecycle", Ordered, func() {
 							AutoFailover: ptr.To(true),
 						},
 						Recovery: &mariadbv1alpha1.GaleraRecovery{
-							Enabled:               true,
+							Enabled:               ptr.To(true),
 							ClusterHealthyTimeout: ptr.To(metav1.Duration{Duration: 10 * time.Second}),
 						},
 						Config: mariadbv1alpha1.GaleraConfig{
