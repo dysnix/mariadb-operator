@@ -184,7 +184,7 @@ func (r *StatefulSetGaleraReconciler) patchStatus(ctx context.Context, mariadb *
 func (r *StatefulSetGaleraReconciler) monitorResult(mdb *mariadbv1alpha1.MariaDB) ctrl.Result {
 	galera := ptr.Deref(mdb.Spec.Galera, mariadbv1alpha1.Galera{})
 	recovery := ptr.Deref(galera.Recovery, mariadbv1alpha1.GaleraRecovery{})
-	if !recovery.Enabled {
+	if !recovery.IsEnabled() {
 		return ctrl.Result{}
 	}
 	requeueAfter := ptr.Deref(recovery.ClusterMonitorInterval, metav1.Duration{Duration: 10 * time.Second}).Duration
@@ -194,7 +194,7 @@ func (r *StatefulSetGaleraReconciler) monitorResult(mdb *mariadbv1alpha1.MariaDB
 func shouldPerformClusterRecovery(mdb *mariadbv1alpha1.MariaDB) bool {
 	galera := ptr.Deref(mdb.Spec.Galera, mariadbv1alpha1.Galera{})
 	recovery := ptr.Deref(galera.Recovery, mariadbv1alpha1.GaleraRecovery{})
-	if !galera.Enabled || !recovery.Enabled {
+	if !galera.Enabled || !recovery.IsEnabled() {
 		return false
 	}
 	if mdb.IsRestoringBackup() || mdb.IsResizingStorage() || !mdb.HasGaleraConfiguredCondition() || mdb.HasGaleraNotReadyCondition() {

@@ -869,7 +869,7 @@ func (b *Builder) BuildGaleraRecoveryJob(key types.NamespacedName, mariadb *mari
 		return nil, errors.New("Galera must be enabled") //nolint:staticcheck
 	}
 	recovery := ptr.Deref(galera.Recovery, mariadbv1alpha1.GaleraRecovery{})
-	if !recovery.Enabled {
+	if !recovery.IsEnabled() {
 		return nil, errors.New("Galera recovery must be enabled") //nolint:staticcheck
 	}
 

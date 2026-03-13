@@ -4458,7 +4458,8 @@ spec:
                           the recovery process.
                         type: string
                       enabled:
-                        description: Enabled is a flag to enable GaleraRecovery.
+                        description: Enabled is a flag to enable GaleraRecovery. It
+                          defaults to true.
                         type: boolean
                       forceClusterBootstrapInPod:
                         description: |-

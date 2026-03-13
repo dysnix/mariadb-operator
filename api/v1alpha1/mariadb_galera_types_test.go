@@ -79,7 +79,7 @@ var _ = Describe("MariaDB Galera types", func() {
 							GracefulShutdownTimeout: ptr.To(metav1.Duration{Duration: 1 * time.Second}),
 						},
 						Recovery: &GaleraRecovery{
-							Enabled:                 true,
+							Enabled:                 ptr.To(true),
 							MinClusterSize:          ptr.To(intstr.FromInt(1)),
 							ClusterMonitorInterval:  ptr.To(metav1.Duration{Duration: 10 * time.Second}),
 							ClusterHealthyTimeout:   ptr.To(metav1.Duration{Duration: 30 * time.Second}),
@@ -119,7 +119,7 @@ var _ = Describe("MariaDB Galera types", func() {
 						},
 						AvailableWhenDonor: ptr.To(true),
 						Recovery: &GaleraRecovery{
-							Enabled:               true,
+							Enabled:               ptr.To(true),
 							MinClusterSize:        ptr.To(intstr.FromString("33%")),
 							ClusterHealthyTimeout: ptr.To(metav1.Duration{Duration: 10 * time.Second}),
 						},
@@ -164,7 +164,7 @@ var _ = Describe("MariaDB Galera types", func() {
 							GracefulShutdownTimeout: ptr.To(metav1.Duration{Duration: 1 * time.Second}),
 						},
 						Recovery: &GaleraRecovery{
-							Enabled:                 true,
+							Enabled:                 ptr.To(true),
 							MinClusterSize:          ptr.To(intstr.FromString("33%")),
 							ClusterMonitorInterval:  ptr.To(metav1.Duration{Duration: 10 * time.Second}),
 							ClusterHealthyTimeout:   ptr.To(metav1.Duration{Duration: 10 * time.Second}),
@@ -189,7 +189,7 @@ var _ = Describe("MariaDB Galera types", func() {
 					Enabled: true,
 					GaleraSpec: GaleraSpec{
 						Recovery: &GaleraRecovery{
-							Enabled: false,
+							Enabled: ptr.To(false),
 						},
 					},
 				},
@@ -232,7 +232,7 @@ var _ = Describe("MariaDB Galera types", func() {
 							GracefulShutdownTimeout: ptr.To(metav1.Duration{Duration: 1 * time.Second}),
 						},
 						Recovery: &GaleraRecovery{
-							Enabled: false,
+							Enabled: ptr.To(false),
 						},
 					},
 				},
@@ -319,7 +319,7 @@ var _ = Describe("MariaDB Galera types", func() {
 						Galera: &Galera{
 							GaleraSpec: GaleraSpec{
 								Recovery: &GaleraRecovery{
-									Enabled:        true,
+									Enabled:        ptr.To(true),
 									MinClusterSize: ptr.To(intstr.FromString("foo")),
 								},
 							},
@@ -338,7 +338,7 @@ var _ = Describe("MariaDB Galera types", func() {
 						Galera: &Galera{
 							GaleraSpec: GaleraSpec{
 								Recovery: &GaleraRecovery{
-									Enabled:        true,
+									Enabled:        ptr.To(true),
 									MinClusterSize: ptr.To(intstr.FromInt(1)),
 								},
 							},
@@ -357,7 +357,7 @@ var _ = Describe("MariaDB Galera types", func() {
 						Galera: &Galera{
 							GaleraSpec: GaleraSpec{
 								Recovery: &GaleraRecovery{
-									Enabled:        true,
+									Enabled:        ptr.To(true),
 									MinClusterSize: ptr.To(intstr.FromInt(1)),
 								},
 							},
@@ -376,7 +376,7 @@ var _ = Describe("MariaDB Galera types", func() {
 						Galera: &Galera{
 							GaleraSpec: GaleraSpec{
 								Recovery: &GaleraRecovery{
-									Enabled:        true,
+									Enabled:        ptr.To(true),
 									MinClusterSize: ptr.To(intstr.FromInt(2)),
 								},
 							},
@@ -395,7 +395,7 @@ var _ = Describe("MariaDB Galera types", func() {
 						Galera: &Galera{
 							GaleraSpec: GaleraSpec{
 								Recovery: &GaleraRecovery{
-									Enabled:        true,
+									Enabled:        ptr.To(true),
 									MinClusterSize: ptr.To(intstr.FromString("50%")),
 								},
 							},
@@ -414,7 +414,7 @@ var _ = Describe("MariaDB Galera types", func() {
 						Galera: &Galera{
 							GaleraSpec: GaleraSpec{
 								Recovery: &GaleraRecovery{
-									Enabled:        true,
+									Enabled:        ptr.To(true),
 									MinClusterSize: ptr.To(intstr.FromString("50%")),
 								},
 							},
@@ -433,7 +433,7 @@ var _ = Describe("MariaDB Galera types", func() {
 						Galera: &Galera{
 							GaleraSpec: GaleraSpec{
 								Recovery: &GaleraRecovery{
-									Enabled:        true,
+									Enabled:        ptr.To(true),
 									MinClusterSize: ptr.To(intstr.FromString("50%")),
 								},
 							},
@@ -452,7 +452,7 @@ var _ = Describe("MariaDB Galera types", func() {
 						Galera: &Galera{
 							GaleraSpec: GaleraSpec{
 								Recovery: &GaleraRecovery{
-									Enabled:        true,
+									Enabled:        ptr.To(true),
 									MinClusterSize: ptr.To(intstr.FromString("50%")),
 								},
 							},
@@ -471,7 +471,7 @@ var _ = Describe("MariaDB Galera types", func() {
 						Galera: &Galera{
 							GaleraSpec: GaleraSpec{
 								Recovery: &GaleraRecovery{
-									Enabled: true,
+									Enabled: ptr.To(true),
 								},
 							},
 						},
@@ -499,7 +499,7 @@ var _ = Describe("MariaDB Galera types", func() {
 						Galera: &Galera{
 							GaleraSpec: GaleraSpec{
 								Recovery: &GaleraRecovery{
-									Enabled: true,
+									Enabled: ptr.To(true),
 								},
 							},
 						},
@@ -515,7 +515,7 @@ var _ = Describe("MariaDB Galera types", func() {
 						Galera: &Galera{
 							GaleraSpec: GaleraSpec{
 								Recovery: &GaleraRecovery{
-									Enabled:        true,
+									Enabled:        ptr.To(true),
 									MinClusterSize: ptr.To(intstr.FromString("foo")),
 								},
 							},
@@ -532,7 +532,7 @@ var _ = Describe("MariaDB Galera types", func() {
 						Galera: &Galera{
 							GaleraSpec: GaleraSpec{
 								Recovery: &GaleraRecovery{
-									Enabled: false,
+									Enabled: ptr.To(false),
 								},
 							},
 						},
@@ -548,7 +548,7 @@ var _ = Describe("MariaDB Galera types", func() {
 						Galera: &Galera{
 							GaleraSpec: GaleraSpec{
 								Recovery: &GaleraRecovery{
-									Enabled:        true,
+									Enabled:        ptr.To(true),
 									MinClusterSize: ptr.To(intstr.FromString("50%")),
 								},
 							},
@@ -565,7 +565,7 @@ var _ = Describe("MariaDB Galera types", func() {
 						Galera: &Galera{
 							GaleraSpec: GaleraSpec{
 								Recovery: &GaleraRecovery{
-									Enabled:        true,
+									Enabled:        ptr.To(true),
 									MinClusterSize: ptr.To(intstr.FromInt(1)),
 								},
 							},
@@ -582,7 +582,7 @@ var _ = Describe("MariaDB Galera types", func() {
 						Galera: &Galera{
 							GaleraSpec: GaleraSpec{
 								Recovery: &GaleraRecovery{
-									Enabled:        true,
+									Enabled:        ptr.To(true),
 									MinClusterSize: ptr.To(intstr.FromInt(-1)),
 								},
 							},
@@ -599,7 +599,7 @@ var _ = Describe("MariaDB Galera types", func() {
 						Galera: &Galera{
 							GaleraSpec: GaleraSpec{
 								Recovery: &GaleraRecovery{
-									Enabled:        true,
+									Enabled:        ptr.To(true),
 									MinClusterSize: ptr.To(intstr.FromInt(4)),
 								},
 							},
@@ -616,7 +616,7 @@ var _ = Describe("MariaDB Galera types", func() {
 						Galera: &Galera{
 							GaleraSpec: GaleraSpec{
 								Recovery: &GaleraRecovery{
-									Enabled:                    true,
+									Enabled:                    ptr.To(true),
 									ForceClusterBootstrapInPod: ptr.To("foo"),
 								},
 							},
@@ -633,7 +633,7 @@ var _ = Describe("MariaDB Galera types", func() {
 						Galera: &Galera{
 							GaleraSpec: GaleraSpec{
 								Recovery: &GaleraRecovery{
-									Enabled:                    true,
+									Enabled:                    ptr.To(true),
 									ForceClusterBootstrapInPod: ptr.To("mariadb-galera-0"),
 								},
 							},
